@@ -1,5 +1,6 @@
 import { Command } from "commander"
 import { init } from "./commands/init";
+import { generate } from "./commands/generate";
 
 const program = new Command();
 
@@ -7,12 +8,18 @@ const program = new Command();
 program
   .name('Quilon')
   .description('Create ERDs out of your ORM Entities with ease.')
-  .version('1.0.0')
+  .version('1.0.0');
 
 // INIT
 program
   .command("init")
   .description("Create a config file with default settings.")
   .action(init);
+
+// GENERATE
+program
+  .command("generate")
+  .description("Generate your ERD with the specified settings.")
+  .action(generate);
 
 program.parse(process.argv);
