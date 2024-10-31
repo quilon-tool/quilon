@@ -1,10 +1,10 @@
 import fs from "fs";
-import { DefaultConfig } from '../types/init';
-import config from "../config/config";
+import { ConfigFile } from "../global/types";
+import config from "../global/config";
 
 // TODO: Create JSON Schema that gets automatically injected as "$schema" in quilon.json (Useful for autocompletion and validation)
 
-const defaultConfig: DefaultConfig = {
+const defaultConfig: ConfigFile = {
   entities: [],
   orm: "TypeORM",
   diagramLanguage: "Mermaid"
