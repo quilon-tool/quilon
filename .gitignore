@@ -1,6 +1,9 @@
 # Node modules
 node_modules/
 
+# Config
+quilon.json
+
 # Logs
 logs
 *.log
