@@ -1,20 +1,21 @@
-import path from 'path';
 import fs from "fs";
 import { DefaultConfig } from '../types/init';
+import config from "../config/config";
 
-const configFile = "quilon.json";
-const configPath = path.join(process.cwd(), configFile);
+// TODO: Create JSON Schema that gets automatically injected as "$schema" in quilon.json (Useful for autocompletion and validation)
 
 const defaultConfig: DefaultConfig = {
   entities: [],
+  orm: "TypeORM",
+  diagramLanguage: "Mermaid"
 };
 
 export const init = (): void => {
-  if (fs.existsSync(configPath)) {
-    console.error(`${configFile} already exists.`);
+  if (fs.existsSync(config.configPath)) {
+    console.error(`${config.configFile} already exists.`);
     return;
   }
 
-  fs.writeFileSync(configPath, JSON.stringify(defaultConfig, null, 2));
-  console.log(`${configFile} successfully created.`);
+  fs.writeFileSync(config.configPath, JSON.stringify(defaultConfig, null, 2));
+  console.log(`${config.configFile} successfully created.`);
 }
