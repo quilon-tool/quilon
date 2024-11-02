@@ -2,7 +2,8 @@ import { glob } from "glob";
 import { readConfigFile } from "../utils/filesystem";
 import path from 'path';
 import fs from 'fs';
-import { ORMs } from "../global/types";
+import { EntityData, ORMs, Relations } from "../global/types";
+import { Project, SourceFile } from "ts-morph";
 
 export const generate = async (): Promise<void> => {
   const configFile = readConfigFile();
@@ -18,8 +19,11 @@ export const generate = async (): Promise<void> => {
     const files = await glob(`${dirPath}/**/${fileName}`);
 
     files.forEach((file) => {
-      const content = fs.readFileSync(file, 'utf-8');
-      console.log(content);
+      // TODO: Parse column types into sql-like types
+      // TODO: Convert the analyzed data into mermaid format
+      // TODO: Generate a JPG using mermaid that displays the ERD
+      const entityData = analyzeTypeORMEntity(file);
+      console.log(entityData);
     });
   });
 }
@@ -31,4 +35,51 @@ const getEntityFileName = (orm: ORMs): string => {
     default:
       throw new Error(`ORM "${orm}" is not implemented.`);
   }
+}
+
+const analyzeTypeORMEntity = (filePath: string): EntityData | void => {
+  const project = new Project();
+  const sourceFile: SourceFile = project.addSourceFileAtPath(filePath);
+  const entityClass = sourceFile.getClass((cls) => {
+    // Find the class decorated with "@Entity"
+    return cls.getDecorator('Entity') !== undefined;
+  });
+
+  if (!entityClass) {
+    throw new Error(`No entity found for ${filePath}`);
+  }
+
+  const entityData: EntityData = {
+    name: entityClass.getName()!,
+    columns: [],
+    relations: [],
+  };
+
+  entityClass.getProperties().forEach((property) =>  {
+    const decorators = property.getDecorators().map((decorator) => decorator.getName());
+    const propertyName = property.getName();
+    const propertyType = property.getType().getText();
+
+    const relationDecorator = decorators.find((decorator) => {
+      if (Object.keys(Relations).includes(decorator)) {
+        return decorator;
+      }
+    });
+
+    if (relationDecorator) {
+      entityData.relations.push({
+        name: propertyName,
+        type: propertyType,
+        relation: relationDecorator as Relations,
+      })
+    } else {
+      entityData.columns.push({
+        name: propertyName,
+        type: propertyType,
+        decorators,
+      });
+    }
+  });
+
+  return entityData;
 }

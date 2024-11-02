@@ -11,3 +11,28 @@ export interface ConfigFile {
   orm: ORMs;
   diagramLanguage: DiagramLanguages;
 }
+
+export interface EntityData {
+  name: string;
+  columns: ColumnData[];
+  relations: RelationData[];
+}
+
+export interface ColumnData {
+  name: string;
+  type: string;
+  decorators: string[];
+}
+
+export interface RelationData {
+  name: string;
+  type: string;
+  relation: Relations;
+}
+
+export enum Relations {
+  OneToOne = "OneToOne",
+  OneToMany = "OneToMany",
+  ManyToOne = "ManyToOne",
+  ManyToMany = "ManyToMany",
+};
