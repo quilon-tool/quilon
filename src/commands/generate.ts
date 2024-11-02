@@ -3,7 +3,7 @@ import { readConfigFile } from "../utils/filesystem";
 import path from 'path';
 import fs from 'fs';
 import { EntityData, ORMs, Relations } from "../global/types";
-import { Project, SourceFile } from "ts-morph";
+import { ClassDeclaration, Project, SourceFile } from "ts-morph";
 
 export const generate = async (): Promise<void> => {
   const configFile = readConfigFile();
@@ -22,7 +22,7 @@ export const generate = async (): Promise<void> => {
       // TODO: Parse column types into sql-like types
       // TODO: Convert the analyzed data into mermaid format
       // TODO: Generate a JPG using mermaid that displays the ERD
-      const entityData = analyzeTypeORMEntity(file);
+      const entityData = analyzeEntity(orm, file);
       console.log(entityData);
     });
   });
@@ -37,7 +37,21 @@ const getEntityFileName = (orm: ORMs): string => {
   }
 }
 
+const analyzeEntity = (orm: ORMs, filePath: string): EntityData | void => {
+  switch(orm) {
+    case ORMs.TypeORM:
+      return analyzeTypeORMEntity(filePath);
+    default:
+      throw new Error(`ORM "${orm}" is not implemented.`);
+  }
+}
+
 const analyzeTypeORMEntity = (filePath: string): EntityData | void => {
+  const entityClass = extractTypeORMEntityClass(filePath);
+  return extractTypeORMProperties(entityClass);
+}
+
+const extractTypeORMEntityClass = (filePath: string): ClassDeclaration => {
   const project = new Project();
   const sourceFile: SourceFile = project.addSourceFileAtPath(filePath);
   const entityClass = sourceFile.getClass((cls) => {
@@ -49,6 +63,10 @@ const analyzeTypeORMEntity = (filePath: string): EntityData | void => {
     throw new Error(`No entity found for ${filePath}`);
   }
 
+  return entityClass;
+}
+
+const extractTypeORMProperties = (entityClass: ClassDeclaration): EntityData => {
   const entityData: EntityData = {
     name: entityClass.getName()!,
     columns: [],
