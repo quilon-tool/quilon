@@ -1,6 +1,6 @@
 import { Command } from "commander";
-import { generate } from "../commands/generate";
 import { InitCommand } from "../commands/init/InitCommand";
+import { GenerateCommand } from "../commands/generate/GenerateCommand";
 
 export class Quilon {
   private program: Command;
@@ -37,9 +37,11 @@ export class Quilon {
   }
 
   private generate() {
+    const command = new GenerateCommand();
+
     this.program
       .command("generate")
       .description("Generate your ERD with the specified settings.")
-      .action(generate);
+      .action(command.execute);
   }
 }
