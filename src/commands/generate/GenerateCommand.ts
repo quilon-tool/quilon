@@ -4,6 +4,7 @@ import { ConfigFile, EntityData, ORMs, Relations } from "../../global/types";
 import { readConfigFile } from "../../utils/filesystem";
 import { AbstractCommand } from "../AbstractCommand";
 import { ClassDeclaration, Project, SourceFile } from "ts-morph";
+import { TypeORMDriver } from "../../drivers/typeorm/TypeORMDriver";
 
 export class GenerateCommand extends AbstractCommand {  
   execute() {
@@ -19,12 +20,15 @@ export class GenerateCommand extends AbstractCommand {
       const fileName = this.getEntityFileName(orm);
       const files = await glob(`${dirPath}/**/${fileName}`);
 
+      const driver = new TypeORMDriver();
+
       files.forEach((file) => {
         // TODO: Parse column types into sql-like types
         // TODO: Convert the analyzed data into mermaid format
         // TODO: Generate a JPG using mermaid that displays the ERD
-        const entityData = this.analyzeEntity(orm, file);
-        console.log(entityData);
+        // const entityData = this.analyzeEntity(orm, file);
+        driver.setFilePath(file)
+        console.log(driver.parseEntity());
       });
     });
   }
