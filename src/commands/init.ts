@@ -1,13 +1,13 @@
 import fs from "fs";
-import { ConfigFile } from "../global/types";
+import { ConfigFile, DiagramLanguages, ORMs } from "../global/types";
 import config from "../global/config";
 
 // TODO: Create JSON Schema that gets automatically injected as "$schema" in quilon.json (Useful for autocompletion and validation)
 
 const defaultConfig: ConfigFile = {
   entities: [],
-  orm: "TypeORM",
-  diagramLanguage: "Mermaid"
+  orm: ORMs.TypeORM,
+  diagramLanguage: DiagramLanguages.Mermaid
 };
 
 export const init = (): void => {
