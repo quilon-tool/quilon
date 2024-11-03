@@ -1,19 +1,15 @@
 import fs from "fs";
 import { ConfigFile, DiagramLanguages, ORMs } from "../../global/types";
 import config from "../../global/config";
-import { Command } from "../Command";
+import { AbstractCommand } from "../AbstractCommand";
 
 // TODO: Create JSON Schema that gets automatically injected as "$schema" in quilon.json (Useful for autocompletion and validation)
 
-export class InitCommand implements Command {
+export class InitCommand extends AbstractCommand {
   private DEFAULT_CONFIG: ConfigFile = {
     entities: [],
     orm: ORMs.TypeORM,
     diagramLanguage: DiagramLanguages.Mermaid
-  }
-
-  constructor() {
-    this.execute = this.execute.bind(this);
   }
 
  execute(): void {
