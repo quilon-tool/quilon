@@ -1,6 +1,5 @@
 import { ClassDeclaration, Project, PropertyDeclaration, SourceFile } from "ts-morph";
-import { IColumnData, IEntityData, IRelationData, Relations } from "../../global/types";
-import { IDriver } from "../types";
+import { IDriver, IColumnData, IEntityData, IRelationData, Relations } from "../types";
 
 export class TypeORMDriver implements IDriver {
   private entityClass: ClassDeclaration | undefined;
