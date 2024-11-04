@@ -16,9 +16,7 @@ export class GenerateCommand extends AbstractCommand {
     }
 
     entities.forEach(async (directory) => {
-      const dirPath = path.resolve(directory);
-      const fileName = this.getEntityFileName(orm);
-      const files = await glob(`${dirPath}/**/${fileName}`);
+      const files = await FileSystemUtils.readFilesFromDirectory(directory, this.getEntityFileName(orm));
 
       files.forEach((file) => {
         // TODO: Parse column types into sql-like types
