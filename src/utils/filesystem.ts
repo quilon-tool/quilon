@@ -1,10 +1,10 @@
 import fs from "fs";
 import config from "../global/config";
-import { ConfigFile } from "../global/types";
+import { IConfigFile } from "../global/types";
 
-export const readConfigFile = (): ConfigFile => {
+export const readConfigFile = (): IConfigFile => {
   const configFileBuffer = fs.readFileSync(config.configPath);
-  const configFile: ConfigFile = JSON.parse(configFileBuffer.toString());
+  const configFile: IConfigFile = JSON.parse(configFileBuffer.toString());
 
   return configFile;
 }

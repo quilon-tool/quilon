@@ -4,6 +4,7 @@ import { IConfigFile, ORMs } from "../../global/types";
 import { readConfigFile } from "../../utils/filesystem";
 import { AbstractCommand } from "../AbstractCommand";
 import { TypeORMDriver } from "../../drivers/typeorm/TypeORMDriver";
+import { Driver } from "../../drivers/Driver";
 
 export class GenerateCommand extends AbstractCommand {  
   execute() {
@@ -19,14 +20,11 @@ export class GenerateCommand extends AbstractCommand {
       const fileName = this.getEntityFileName(orm);
       const files = await glob(`${dirPath}/**/${fileName}`);
 
-      const driver = new TypeORMDriver();
-
       files.forEach((file) => {
         // TODO: Parse column types into sql-like types
         // TODO: Convert the analyzed data into mermaid format
         // TODO: Generate a JPG using mermaid that displays the ERD
-        // const entityData = this.analyzeEntity(orm, file);
-        driver.setFilePath(file)
+        const driver = new Driver(file);
         console.log(driver.parseEntity());
       });
     });
@@ -40,13 +38,4 @@ export class GenerateCommand extends AbstractCommand {
         throw new Error(`ORM "${orm}" is not implemented.`);
     }
   }  
-
-  // private analyzeEntity(orm: ORMs, filePath: string): EntityData | void {
-  //   switch(orm) {
-  //     case ORMs.TypeORM:
-  //       return this.analyzeTypeORMEntity(filePath);
-  //     default:
-  //       throw new Error(`ORM "${orm}" is not implemented.`);
-  //   }
-  // }
 }

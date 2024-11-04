@@ -3,12 +3,13 @@ import { IColumnData, IEntityData, IRelationData, Relations } from "../../global
 import { IDriver } from "../types";
 
 export class TypeORMDriver implements IDriver {
-  private filePath: string | undefined;
   private entityClass: ClassDeclaration | undefined;
 
+  constructor(private filePath: string) {}
+
   parseEntity(): IEntityData {
-    if (!this.filePath || this.entityClass) {
-      throw new Error("filePath or entityClass are undefined");
+    if (this.entityClass) {
+      throw new Error("entityClass is undefined");
     }
 
     const project = new Project();
@@ -23,10 +24,6 @@ export class TypeORMDriver implements IDriver {
       columns: this.extractColumns(),
       relations: this.extractRelations(),
     }
-  }
-
-  setFilePath(filePath: string) {
-    this.filePath = filePath;
   }
 
   private extractTableName(): string {
