@@ -15,25 +15,19 @@ export class GenerateCommand extends AbstractCommand {
       throw new Error("No entities found")
     }
 
+    const driver = new Driver();
+
     entities.forEach(async (directory) => {
-      const files = await FileSystemUtils.readFilesFromDirectory(directory, this.getEntityFileName(orm));
+      const fileNamePattern = driver.getFileNamePattern();
+      const files = await FileSystemUtils.readFilesFromDirectory(directory, fileNamePattern);
 
       files.forEach((file) => {
         // TODO: Parse column types into sql-like types
         // TODO: Convert the analyzed data into mermaid format
         // TODO: Generate a JPG using mermaid that displays the ERD
-        const driver = new Driver(file);
+        driver.setFilePath(file);
         console.log(driver.parseEntity());
       });
     });
   }
-
-  private getEntityFileName(orm: ORMs): string {
-    switch(orm) {
-      case ORMs.TypeORM: 
-        return "*.entity.ts";
-      default:
-        throw new Error(`ORM "${orm}" is not implemented.`);
-    }
-  }  
 }

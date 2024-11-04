@@ -5,22 +5,42 @@ import { TypeORMDriver } from "./typeorm/TypeORMDriver";
 import { IDriver } from "./types";
 
 export class Driver implements IDriver {
-  orm: ORMs;
-  filePath: string;
+  private orm: ORMs;
+  private filePath: string | undefined;
   
-  constructor(filePath: string) {
+  constructor() {
     const { orm } = FileSystemUtils.readAndParseJSONFile<IConfigFile>(config.configPath);
     
     this.orm = orm;
+  }
+
+  setFilePath(filePath: string): void {
     this.filePath = filePath;
   }
 
   parseEntity(): IEntityData {
+    if (!this.filePath) {
+      throw new Error("filePath is not defined.");
+    }
+
     const driver = this.getDriver();
     return driver.parseEntity(this.filePath);
   }
 
+  getFileNamePattern(): string {
+    switch(this.orm) {
+      case ORMs.TypeORM:
+        return "*.entity.ts";
+      default:
+        throw new Error(`No Driver for ORM${this.orm} implemented.`);
+    }
+  }
+
   private getDriver(): IDriver {
+    if (!this.filePath) {
+      throw new Error("filePath is not defined.");
+    }
+
     switch(this.orm) {
       case ORMs.TypeORM:
         return new TypeORMDriver(this.filePath);
