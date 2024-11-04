@@ -1,12 +1,12 @@
 import { ClassDeclaration, Project, PropertyDeclaration, SourceFile } from "ts-morph";
-import { ColumnData, EntityData, RelationData, Relations } from "../../global/types";
-import { Driver } from "../Driver";
+import { IColumnData, IEntityData, IRelationData, Relations } from "../../global/types";
+import { IDriver } from "../types";
 
-export class TypeORMDriver implements Driver {
+export class TypeORMDriver implements IDriver {
   private filePath: string | undefined;
   private entityClass: ClassDeclaration | undefined;
 
-  parseEntity(): EntityData {
+  parseEntity(): IEntityData {
     if (!this.filePath || this.entityClass) {
       throw new Error("filePath or entityClass are undefined");
     }
@@ -37,12 +37,12 @@ export class TypeORMDriver implements Driver {
     return this.entityClass?.getName() || "% ENTITY %";
   }
 
-  private extractColumns(): ColumnData[] {
+  private extractColumns(): IColumnData[] {
     if (!this.entityClass) {
       throw new Error("entityClass is undefined");
     }
 
-    const columns: ColumnData[] = [];
+    const columns: IColumnData[] = [];
 
     this.entityClass.getProperties().forEach((property) => {
       const relationDecorator = this.getRelationDecorator(property);
@@ -61,12 +61,12 @@ export class TypeORMDriver implements Driver {
     return columns;
   }
 
-  private extractRelations(): RelationData[] {
+  private extractRelations(): IRelationData[] {
     if (!this.entityClass) {
       throw new Error("entityClass is undefined");
     }
 
-    const relations: RelationData[] = [];
+    const relations: IRelationData[] = [];
 
     this.entityClass.getProperties().forEach((property) => {
       const relationDecorator = this.getRelationDecorator(property);

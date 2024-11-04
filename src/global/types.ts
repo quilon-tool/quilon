@@ -6,26 +6,26 @@ export enum DiagramLanguages {
   Mermaid = "Mermaid"
 }
 
-export interface ConfigFile {
+export interface IConfigFile {
   entities: string[];
   orm: ORMs;
   diagramLanguage: DiagramLanguages;
 }
 
-export interface EntityData {
+export interface IEntityData {
   name: string;
-  columns: ColumnData[];
-  relations: RelationData[];
+  columns: IColumnData[];
+  relations: IRelationData[];
 }
 
-export interface ColumnData {
+export interface IColumnData {
   name: string;
   type: string;
   // TODO: Remove
   decorators?: string[];
 }
 
-export interface RelationData {
+export interface IRelationData {
   name: string;
   type: string;
   relation: Relations;
