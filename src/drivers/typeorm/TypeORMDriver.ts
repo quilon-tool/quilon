@@ -1,4 +1,4 @@
-import { ClassDeclaration, Project, SourceFile } from "ts-morph";
+import { ClassDeclaration, Project, PropertyDeclaration, SourceFile } from "ts-morph";
 import { ColumnData, EntityData, RelationData, Relations } from "../../global/types";
 import { Driver } from "../Driver";
 
@@ -38,16 +38,46 @@ export class TypeORMDriver implements Driver {
   }
 
   private extractColumns(): ColumnData[] {
-    return [
-      { name: 'id', type: 'number', decorators: [] },
-      { name: 'name', type: 'string', decorators: [] },
-      { name: 'age', type: 'number', decorators: [] }
-    ];
+    if (!this.entityClass) {
+      throw new Error("entityClass is undefined");
+    }
+
+    const columns: ColumnData[] = [];
+
+    this.entityClass.getProperties().forEach((property) => {
+      const relationDecorator = this.getRelationDecorator(property);
+
+      if (!relationDecorator) {
+        const columnName = property.getName();
+        const columnType = property.getType().getText();
+
+        columns.push({
+          name: columnName,
+          type: columnType,
+        });
+      }
+    });
+
+    return columns;
   }
 
   private extractRelations(): RelationData[] {
     return [
       { name: 'posts', type: 'Post[]', relation: Relations.OneToMany }
     ];
+  }
+
+  private getRelationDecorator(property: PropertyDeclaration): string | undefined {
+    if (!this.entityClass) {
+      throw new Error("entityClass is undefined");
+    }
+
+    const decorators = property.getDecorators().map((decorator) => decorator.getName());
+
+    return decorators.find((decorator) => {
+      if (Object.keys(Relations).includes(decorator)) {
+        return decorator;
+      }
+    });
   }
 }

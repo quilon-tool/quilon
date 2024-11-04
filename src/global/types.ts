@@ -21,7 +21,8 @@ export interface EntityData {
 export interface ColumnData {
   name: string;
   type: string;
-  decorators: string[];
+  // TODO: Remove
+  decorators?: string[];
 }
 
 export interface RelationData {
