@@ -1,6 +1,4 @@
-import { glob } from "glob";
-import path from "path";
-import { IConfigFile, ORMs } from "../../global/types";
+import { IConfigFile } from "../../global/types";
 import { FileSystemUtils } from "../../utils/Filesystem";
 import { AbstractCommand } from "../AbstractCommand";
 import { Driver } from "../../drivers/Driver";
@@ -9,7 +7,7 @@ import { GlobalConfig } from "../../global/Config";
 export class GenerateCommand extends AbstractCommand {  
   execute() {
     const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_FILE);
-    const { entities, orm } = configFile;
+    const { entities } = configFile;
 
     if (!entities || entities.length === 0) {
       throw new Error("No entities found")
