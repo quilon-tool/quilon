@@ -1,6 +1,6 @@
 import fs from "fs";
 import { ConfigFile, DiagramLanguages, ORMs } from "../../global/types";
-import config from "../../global/config";
+import config from "../../global/Config";
 import { AbstractCommand } from "../AbstractCommand";
 
 // TODO: Create JSON Schema that gets automatically injected as "$schema" in quilon.json (Useful for autocompletion and validation)

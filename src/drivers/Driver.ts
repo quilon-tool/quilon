@@ -1,4 +1,4 @@
-import config from "../global/config";
+import { GlobalConfig } from "../global/Config";
 import { IConfigFile, IEntityData, ORMs } from "../global/types";
 import { FileSystemUtils } from "../utils/Filesystem";
 import { TypeORMDriver } from "./typeorm/TypeORMDriver";
@@ -9,7 +9,7 @@ export class Driver implements IDriver {
   private filePath: string | undefined;
   
   constructor() {
-    const { orm } = FileSystemUtils.readAndParseJSONFile<IConfigFile>(config.configPath);
+    const { orm } = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_PATH);
     
     this.orm = orm;
   }
