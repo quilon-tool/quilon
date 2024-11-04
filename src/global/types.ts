@@ -21,8 +21,6 @@ export interface IEntityData {
 export interface IColumnData {
   name: string;
   type: string;
-  // TODO: Remove
-  decorators?: string[];
 }
 
 export interface IRelationData {
