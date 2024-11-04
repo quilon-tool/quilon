@@ -62,9 +62,28 @@ export class TypeORMDriver implements Driver {
   }
 
   private extractRelations(): RelationData[] {
-    return [
-      { name: 'posts', type: 'Post[]', relation: Relations.OneToMany }
-    ];
+    if (!this.entityClass) {
+      throw new Error("entityClass is undefined");
+    }
+
+    const relations: RelationData[] = [];
+
+    this.entityClass.getProperties().forEach((property) => {
+      const relationDecorator = this.getRelationDecorator(property);
+
+      if (relationDecorator) {
+        const columnName = property.getName();
+        const columnType = property.getType().getText();
+
+        relations.push({
+          name: columnName,
+          type: columnType,
+          relation: relationDecorator as Relations,
+        });
+      }
+    });
+
+    return relations;
   }
 
   private getRelationDecorator(property: PropertyDeclaration): string | undefined {
