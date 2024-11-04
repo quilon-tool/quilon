@@ -1,15 +1,15 @@
 import { glob } from "glob";
 import path from "path";
 import { IConfigFile, ORMs } from "../../global/types";
-import { readConfigFile } from "../../utils/filesystem";
+import { FileSystemUtils } from "../../utils/Filesystem";
 import { AbstractCommand } from "../AbstractCommand";
-import { TypeORMDriver } from "../../drivers/typeorm/TypeORMDriver";
 import { Driver } from "../../drivers/Driver";
+import config from "../../global/config";
 
 export class GenerateCommand extends AbstractCommand {  
   execute() {
-    const configFile = readConfigFile();
-    const { entities, orm }: IConfigFile = configFile;
+    const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(config.configPath);
+    const { entities, orm } = configFile;
 
     if (!entities || entities.length === 0) {
       throw new Error("No entities found")
