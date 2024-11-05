@@ -3,9 +3,13 @@ import { FileSystemUtils } from "../../utils/Filesystem";
 import { AbstractCommand } from "../AbstractCommand";
 import { Driver } from "../../drivers/Driver";
 import { GlobalConfig } from "../../global/Config";
+import { Builder } from "../../builders/Builder";
+
+// TODO: Generate a JPG using mermaid that displays the ERD
+// TODO: Export the JPG and the Diagram Code to the directory, specified in quilon.json
 
 export class GenerateCommand extends AbstractCommand {  
-  execute() {
+  async execute() {
     const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_FILE);
     const { entities } = configFile;
 
@@ -14,18 +18,20 @@ export class GenerateCommand extends AbstractCommand {
     }
 
     const driver = new Driver();
+    const builder = new Builder();
 
-    entities.forEach(async (directory) => {
+    for (const directory of entities) {
       const fileNamePattern = driver.getFileNamePattern();
       const files = await FileSystemUtils.readFilesFromDirectory(directory, fileNamePattern);
 
-      files.forEach((file) => {
-        // TODO: Convert the analyzed data into mermaid format
-        // TODO: Generate a JPG using mermaid that displays the ERD
+      for (const file of files) {
         driver.setFilePath(file);
-        const entity = driver.parseEntity();
-        console.log(entity);
-      });
-    });
+
+        const parsedEntity = driver.parseEntity();
+        builder.appendEntity(parsedEntity);
+      }
+    }
+
+    console.log(builder.getDiagram());
   }
 }
