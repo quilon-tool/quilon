@@ -10,4 +10,5 @@ export interface IConfigFile {
   entities: string[];
   orm: ORMs;
   diagramLanguage: DiagramLanguages;
+  outputDir: string;
 }

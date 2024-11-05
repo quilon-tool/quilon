@@ -9,7 +9,8 @@ export class InitCommand extends AbstractCommand {
   private DEFAULT_CONFIG: IConfigFile = {
     entities: [],
     orm: ORMs.TypeORM,
-    diagramLanguage: DiagramLanguages.Mermaid
+    diagramLanguage: DiagramLanguages.Mermaid,
+    outputDir: GlobalConfig.OUTPUT_DIR
   }
 
  execute(): void {

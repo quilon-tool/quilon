@@ -16,7 +16,7 @@ import path from 'path';
 export class GenerateCommand extends AbstractCommand {  
   async execute() {
     const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_PATH);
-    const { entities } = configFile;
+    const { entities, outputDir } = configFile;
 
     if (!entities || entities.length === 0) {
       throw new Error("No entities found")
@@ -37,11 +37,11 @@ export class GenerateCommand extends AbstractCommand {
       }
     }
 
-    const fileName = path.join(GlobalConfig.OUTPUT_DIR, `${GlobalConfig.DIAGRAM_FILE_NAME}.${builder.fileExtension}`);
+    const fileName = path.join(outputDir, `${GlobalConfig.DIAGRAM_FILE_NAME}.${builder.fileExtension}`);
     const diagram = builder.getDiagram();
 
-    if (!fs.existsSync(GlobalConfig.OUTPUT_DIR)) {
-      fs.mkdirSync(GlobalConfig.OUTPUT_DIR);
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir);
     }
 
     fs.writeFileSync(fileName, diagram);
