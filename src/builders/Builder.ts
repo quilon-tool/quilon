@@ -6,6 +6,8 @@ import { MermaidBuilder } from "./mermaid/Mermaid";
 import { IBuilder } from "./types";
 
 export class Builder implements IBuilder {
+  readonly fileExtension: string;
+
   private diagramLanguage: DiagramLanguages;
 
   private builder: IBuilder;
@@ -15,6 +17,7 @@ export class Builder implements IBuilder {
 
     this.diagramLanguage = diagramLanguage;
     this.builder = this.getBuilder();
+    this.fileExtension = this.builder.fileExtension;
   }
 
   getDiagram(): string {

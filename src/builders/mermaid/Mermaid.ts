@@ -2,6 +2,8 @@ import { IEntityData } from "../../drivers/types";
 import { IBuilder } from "../types";
 
 export class MermaidBuilder implements IBuilder {
+  readonly fileExtension = "mmd";
+
   // TODO: Type keys with Relations
   private mappedRelationTypes = {
     OneToMany: "||--o{",
