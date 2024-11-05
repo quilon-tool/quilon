@@ -45,5 +45,7 @@ export class GenerateCommand extends AbstractCommand {
     }
 
     fs.writeFileSync(fileName, diagram);
+
+    console.log(`ERD successfully created!`);
   }
 }
