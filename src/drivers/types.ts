@@ -19,6 +19,7 @@ export interface IRelationData {
   relation: Relations;
 }
 
+// TODO: Rename to TRelations
 export enum Relations {
   OneToOne = "OneToOne",
   OneToMany = "OneToMany",
