@@ -46,10 +46,13 @@ export class TypeORMDriver implements IDriver {
       if (!relationDecorator) {
         const columnName = property.getName();
         const columnType = property.getType().getText();
+        
+        // Type can be specified with @Column({ type: "float" })
+        const decoratorType = this.getDecoratorType(property);
 
         columns.push({
           name: columnName,
-          type: columnType,
+          type: decoratorType || columnType,
         });
       }
     });
@@ -82,11 +85,38 @@ export class TypeORMDriver implements IDriver {
     return relations;
   }
 
-  private getRelationDecorator(property: PropertyDeclaration): string | undefined {
-    if (!this.entityClass) {
-      throw new Error("entityClass is undefined");
+  private getDecoratorType(property: PropertyDeclaration): string | undefined {
+    let decoratorType;
+
+    property.getDecorators().map((decorator) => {
+      const args = decorator.getArguments();
+      const type = args.find((arg) => arg.getText().includes("type"));
+      
+      if (!type) {
+        return;
+      }
+
+      decoratorType = this.getDecoratorTypeValue(type.getText()); 
+    });
+
+    return decoratorType;
+  }
+
+  private getDecoratorTypeValue(type: string): string | undefined {
+    // For example: type --> '{ type: "float" }'
+    const regex = /type:\s*"(.*?)"/;
+    const match = type.match(regex);
+
+    let typeValue;
+
+    if (match) {
+      typeValue = match[1];
     }
 
+    return typeValue;
+  }
+
+  private getRelationDecorator(property: PropertyDeclaration): string | undefined {
     const decorators = property.getDecorators().map((decorator) => decorator.getName());
 
     return decorators.find((decorator) => {

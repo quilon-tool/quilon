@@ -24,7 +24,8 @@ export class GenerateCommand extends AbstractCommand {
         // TODO: Convert the analyzed data into mermaid format
         // TODO: Generate a JPG using mermaid that displays the ERD
         driver.setFilePath(file);
-        console.log(driver.parseEntity());
+        const entity = driver.parseEntity();
+        console.log(entity);
       });
     });
   }
