@@ -7,9 +7,6 @@ import { Builder } from "../../builders/Builder";
 import fs from 'fs';
 import path from 'path';
 
-// TODO: Generate a JPG using mermaid that displays the ERD
-// TODO: Export the JPG and the Diagram Code to the directory, specified in quilon.json
-
 // TODO: Add PK and FK section
 // TODO: Add id of the related table (FK) to entity
 
