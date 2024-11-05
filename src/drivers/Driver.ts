@@ -32,7 +32,7 @@ export class Driver implements IDriver {
       case ORMs.TypeORM:
         return "*.entity.ts";
       default:
-        throw new Error(`No Driver for ORM${this.orm} implemented.`);
+        throw new Error(`No Driver for ORM ${this.orm} implemented.`);
     }
   }
 
@@ -45,7 +45,7 @@ export class Driver implements IDriver {
       case ORMs.TypeORM:
         return new TypeORMDriver(this.filePath);
       default:
-        throw new Error(`No Driver for ORM${this.orm} implemented.`);
+        throw new Error(`No Driver for ORM ${this.orm} implemented.`);
     }
   }
 }
