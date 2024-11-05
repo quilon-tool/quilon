@@ -1,5 +1,5 @@
 import { ClassDeclaration, Project, PropertyDeclaration, SourceFile } from "ts-morph";
-import { IDriver, IColumnData, IEntityData, IRelationData, Relations } from "../types";
+import { IDriver, IColumnData, IEntityData, IRelationData, TRelations } from "../types";
 
 export class TypeORMDriver implements IDriver {
   private entityClass: ClassDeclaration | undefined;
@@ -111,7 +111,7 @@ export class TypeORMDriver implements IDriver {
         relations.push({
           name: columnName,
           type: columnType.replace(/\[\]/, ''),
-          relation: relationDecorator as Relations,
+          relation: relationDecorator as TRelations,
         });
       }
     });
@@ -154,7 +154,7 @@ export class TypeORMDriver implements IDriver {
     const decorators = property.getDecorators().map((decorator) => decorator.getName());
 
     return decorators.find((decorator) => {
-      if (Object.keys(Relations).includes(decorator)) {
+      if (Object.keys(TRelations).includes(decorator)) {
         return decorator;
       }
     });

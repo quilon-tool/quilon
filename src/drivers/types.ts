@@ -16,11 +16,10 @@ export interface IColumnData {
 export interface IRelationData {
   name: string;
   type: string;
-  relation: Relations;
+  relation: TRelations;
 }
 
-// TODO: Rename to TRelations
-export enum Relations {
+export enum TRelations {
   OneToOne = "OneToOne",
   OneToMany = "OneToMany",
   ManyToOne = "ManyToOne",
