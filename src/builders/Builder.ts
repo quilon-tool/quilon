@@ -13,7 +13,8 @@ export class Builder implements IBuilder {
   private builder: IBuilder;
   
   constructor() {
-    const { diagramLanguage } = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_PATH);
+    const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_PATH);
+    const { diagramLanguage } = configFile;
 
     this.diagramLanguage = diagramLanguage;
     this.builder = this.getBuilder();

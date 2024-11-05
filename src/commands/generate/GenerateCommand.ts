@@ -14,36 +14,31 @@ import path from 'path';
 // TODO: Add id of the related table (FK) to entity
 
 export class GenerateCommand extends AbstractCommand {  
-  private driver = new Driver();
-  private builder = new Builder();
-
   async execute() {
-    const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_FILE);
+    const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_PATH);
     const { entities } = configFile;
 
     if (!entities || entities.length === 0) {
       throw new Error("No entities found")
     }
 
+    const driver = new Driver();
+    const builder = new Builder();
+
     for (const directory of entities) {
-      const fileNamePattern = this.driver.getFileNamePattern();
+      const fileNamePattern = driver.getFileNamePattern();
       const files = await FileSystemUtils.readFilesFromDirectory(directory, fileNamePattern);
 
       for (const file of files) {
-        this.driver.setFilePath(file);
+        driver.setFilePath(file);
 
-        const parsedEntity = this.driver.parseEntity();
-        this.builder.appendEntity(parsedEntity);
+        const parsedEntity = driver.parseEntity();
+        builder.appendEntity(parsedEntity);
       }
     }
 
-    this.writeDiagramToFile();
-  }
-
-  private writeDiagramToFile(): void {
-    const fileName = path.join(GlobalConfig.OUTPUT_DIR, `${GlobalConfig.DIAGRAM_FILE_NAME}.${this.builder.fileExtension}`);
-
-    const diagram = this.builder.getDiagram();
+    const fileName = path.join(GlobalConfig.OUTPUT_DIR, `${GlobalConfig.DIAGRAM_FILE_NAME}.${builder.fileExtension}`);
+    const diagram = builder.getDiagram();
 
     if (!fs.existsSync(GlobalConfig.OUTPUT_DIR)) {
       fs.mkdirSync(GlobalConfig.OUTPUT_DIR);

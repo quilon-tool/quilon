@@ -11,6 +11,7 @@ export class FileSystemUtils {
 
   static async readFilesFromDirectory(directory: string, fileNamePattern: string): Promise<string[]> {
     const directoryPath = path.resolve(directory);
+
     return glob(`${directoryPath}/**/${fileNamePattern}`);
   }
 }
