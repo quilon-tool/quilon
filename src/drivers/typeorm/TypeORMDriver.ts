@@ -4,6 +4,37 @@ import { IDriver, IColumnData, IEntityData, IRelationData, Relations } from "../
 export class TypeORMDriver implements IDriver {
   private entityClass: ClassDeclaration | undefined;
 
+  private mappedDataTypes: { [key: string ]: string } = {
+    string: "varchar",
+    number: "integer",
+    boolean: "boolean",
+    Date: "timestamp",
+    float: "float",
+    double: "double precision",
+    decimal: "numeric",
+    int: "integer",
+    integer: "integer",
+    smallint: "smallint",
+    bigint: "bigint",
+    text: "text",
+    json: "json",
+    jsonb: "jsonb",
+    uuid: "uuid",
+    char: "char",
+    varchar: "varchar",
+    bytea: "bytea",
+    real: "real",
+    date: "date",
+    time: "time",
+    timestamp: "timestamp",
+    timestamptz: "timestamptz",
+    interval: "interval",
+    array: "ARRAY", 
+    geometry: "geometry",
+    geography: "geography", 
+    enum: "enum"
+  }
+
   constructor(private filePath: string) {}
 
   parseEntity(): IEntityData {
@@ -44,15 +75,18 @@ export class TypeORMDriver implements IDriver {
       const relationDecorator = this.getRelationDecorator(property);
 
       if (!relationDecorator) {
-        const columnName = property.getName();
-        const columnType = property.getType().getText();
-        
         // Type can be specified with @Column({ type: "float" })
         const decoratorType = this.getDecoratorType(property);
 
+        const columnName = property.getName();
+        const columnType = decoratorType || property.getType().getText();
+
+        // Typescript Type has to be converted into corresponding SQL type
+        const mappedType = this.mappedDataTypes[columnType] || "text"
+
         columns.push({
           name: columnName,
-          type: decoratorType || columnType,
+          type: mappedType,
         });
       }
     });

@@ -20,7 +20,6 @@ export class GenerateCommand extends AbstractCommand {
       const files = await FileSystemUtils.readFilesFromDirectory(directory, fileNamePattern);
 
       files.forEach((file) => {
-        // TODO: Parse column types into sql-like types
         // TODO: Convert the analyzed data into mermaid format
         // TODO: Generate a JPG using mermaid that displays the ERD
         driver.setFilePath(file);
