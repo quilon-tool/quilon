@@ -10,14 +10,11 @@ export class Builder implements IBuilder {
 
   private builder: IBuilder;
   
-  private diagram: string;
-
   constructor() {
     const { diagramLanguage } = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_PATH);
 
     this.diagramLanguage = diagramLanguage;
     this.builder = this.getBuilder();
-    this.diagram = this.builder.getDiagram(); // Setup default diagram structure
   }
 
   getDiagram(): string {

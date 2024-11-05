@@ -110,7 +110,7 @@ export class TypeORMDriver implements IDriver {
 
         relations.push({
           name: columnName,
-          type: columnType,
+          type: columnType.replace(/\[\]/, ''),
           relation: relationDecorator as Relations,
         });
       }

@@ -23,16 +23,30 @@ export class MermaidBuilder implements IBuilder {
   }
 
   appendEntity(entity: IEntityData): void {
-    this.diagram += `  ${entity.name} {\n`;
+    this.appendTableName(entity);
+    this.appendColumns(entity);
+    this.appendRelations(entity);
+
+    this.diagram += "\n";
+  }
+
+  private appendTableName(entity: IEntityData): void {
+    this.diagram += `  ${entity.name}`;
+  }
+
+  private appendColumns(entity: IEntityData): void {
+    this.diagram += " {\n";
 
     entity.columns.forEach((column) => {
       this.diagram += `    ${column.type} ${column.name}\n`;
     });
 
-    this.diagram += `  }\n`;
+    this.diagram += "  }\n";
+  }
 
+  private appendRelations(entity: IEntityData): void {
     entity.relations.forEach((relation) => {
-      const relatedEntityName = relation.type.replace(/\[\]/, '');
+      const relatedEntityName = relation.type;
       const relationType = this.mappedRelationTypes[relation.relation];
 
       const relationKey = `${entity.name}-${relatedEntityName}`;
