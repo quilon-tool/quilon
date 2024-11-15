@@ -1,7 +1,7 @@
 import { GlobalConfig } from "../global/Config";
 import { IConfigFile, ORMs } from "../global/types";
 import { FileSystemUtils } from "../utils/Filesystem";
-import { TypeORMDriver } from "./typeorm/TypeORMDriver";
+import { TypeORMDriver } from "./typeorm/Typeorm";
 import { IDriver, IEntityData } from "./types";
 
 export class Driver implements IDriver {
