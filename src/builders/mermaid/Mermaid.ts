@@ -20,10 +20,20 @@ export class MermaidBuilder implements IBuilder {
     this.diagram = "erDiagram\n";
   }
 
+  /**
+   * Returns the current state of the generated diagram.
+   * 
+   * @returns {string} The Mermaid formatted diagram.
+   */
   getDiagram(): string {
     return this.diagram;
   }
 
+  /**
+   * Appends an entity, including its table name, columns, and relations, to the diagram.
+   * 
+   * @param {IEntityData} entity - The entity data to add to the diagram.
+   */
   appendEntity(entity: IEntityData): void {
     this.appendTableName(entity);
     this.appendColumns(entity);
@@ -32,10 +42,22 @@ export class MermaidBuilder implements IBuilder {
     this.diagram += "\n";
   }
 
+  /**
+   * Appends the table name for the given entity to the diagram.
+   * 
+   * @private
+   * @param {IEntityData} entity - The entity whose table name is to be added.
+   */
   private appendTableName(entity: IEntityData): void {
     this.diagram += `  ${entity.name}`;
   }
 
+  /**
+   * Appends columns for the given entity to the diagram.
+   * 
+   * @private
+   * @param {IEntityData} entity - The entity whose columns are to be added.
+   */
   private appendColumns(entity: IEntityData): void {
     this.diagram += " {\n";
 
@@ -46,6 +68,12 @@ export class MermaidBuilder implements IBuilder {
     this.diagram += "  }\n";
   }
 
+  /**
+   * Appends relations for the given entity to the diagram, avoiding duplicate relations.
+   * 
+   * @private
+   * @param {IEntityData} entity - The entity whose relations are to be added.
+   */
   private appendRelations(entity: IEntityData): void {
     entity.relations.forEach((relation) => {
       const relatedEntityName = relation.type;
