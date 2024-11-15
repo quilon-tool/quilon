@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Config File Schema",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri",
+      "description": "The URL of the JSON Schema used to validate this file."
+    },
+    "entities": {
+      "type": "array",
+      "description": "List of entity definitions.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "orm": {
+      "type": "string",
+      "description": "The ORM to be used.",
+      "enum": ["TypeORM"]
+    },
+    "diagramLanguage": {
+      "type": "string",
+      "description": "The language used for diagrams.",
+      "enum": ["Mermaid"]
+    },
+    "outputDir": {
+      "type": "string",
+      "description": "The directory where output files will be stored."
+    }
+  },
+  "required": ["entities", "orm", "diagramLanguage", "outputDir"],
+  "additionalProperties": false
+}

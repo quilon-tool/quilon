@@ -7,6 +7,7 @@ export enum DiagramLanguages {
 }
 
 export interface IConfigFile {
+  $schema: string;
   entities: string[];
   orm: ORMs;
   diagramLanguage: DiagramLanguages;
