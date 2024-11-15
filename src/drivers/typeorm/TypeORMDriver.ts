@@ -37,6 +37,12 @@ export class TypeORMDriver implements IDriver {
 
   constructor(private filePath: string) {}
 
+  /**
+   * Parses the entity from the provided file path.
+   * 
+   * @returns {IEntityData} The parsed entity data including table name, columns, and relations.
+   * @throws {Error} If the entity class is not defined.
+   */
   parseEntity(): IEntityData {
     if (this.entityClass) {
       throw new Error("entityClass is undefined");
@@ -56,6 +62,13 @@ export class TypeORMDriver implements IDriver {
     }
   }
 
+  /**
+   * Extracts the table name for the entity.
+   * 
+   * @private
+   * @returns {string} The name of the table or a default placeholder if undefined.
+   * @throws {Error} If the entity class is not defined.
+   */
   private extractTableName(): string {
     if (!this.entityClass) {
       throw new Error("entityClass is undefined");
@@ -64,6 +77,13 @@ export class TypeORMDriver implements IDriver {
     return this.entityClass?.getName() || "% ENTITY %";
   }
 
+  /**
+   * Extracts column data from the entity's properties.
+   * 
+   * @private
+   * @returns {IColumnData[]} An array of column data including names and types.
+   * @throws {Error} If the entity class is not defined.
+   */
   private extractColumns(): IColumnData[] {
     if (!this.entityClass) {
       throw new Error("entityClass is undefined");
@@ -94,6 +114,13 @@ export class TypeORMDriver implements IDriver {
     return columns;
   }
 
+  /**
+   * Extracts relation data from the entity's properties.
+   * 
+   * @private
+   * @returns {IRelationData[]} An array of relation data including names, types, and relation types.
+   * @throws {Error} If the entity class is not defined.
+   */
   private extractRelations(): IRelationData[] {
     if (!this.entityClass) {
       throw new Error("entityClass is undefined");
@@ -119,6 +146,13 @@ export class TypeORMDriver implements IDriver {
     return relations;
   }
 
+  /**
+   * Retrieves the column type specified in a decorator, if present.
+   * 
+   * @private
+   * @param {PropertyDeclaration} property - The property to inspect for column type.
+   * @returns {string | undefined} The specified column type or undefined if not found.
+   */
   private getDecoratorType(property: PropertyDeclaration): string | undefined {
     let decoratorType;
 
@@ -136,6 +170,13 @@ export class TypeORMDriver implements IDriver {
     return decoratorType;
   }
 
+  /**
+   * Extracts the actual column type from a decorator type string.
+   * 
+   * @private
+   * @param {string} type - The decorator type string (e.g., '{ type: "float" }').
+   * @returns {string | undefined} The extracted type or undefined if not found.
+   */
   private getDecoratorTypeValue(type: string): string | undefined {
     // For example: type --> '{ type: "float" }'
     const regex = /type:\s*"(.*?)"/;
@@ -150,6 +191,13 @@ export class TypeORMDriver implements IDriver {
     return typeValue;
   }
 
+  /**
+   * Retrieves the relation type decorator (e.g., OneToMany) from a property.
+   * 
+   * @private
+   * @param {PropertyDeclaration} property - The property to inspect for relation decorators.
+   * @returns {string | undefined} The relation type if found, or undefined otherwise.
+   */
   private getRelationDecorator(property: PropertyDeclaration): string | undefined {
     const decorators = property.getDecorators().map((decorator) => decorator.getName());
 
