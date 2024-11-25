@@ -1,22 +1,22 @@
-import { IConfigFile } from "../../global/types";
-import { FileSystemUtils } from "../../utils/Filesystem";
-import { AbstractCommand } from "../AbstractCommand";
-import { Driver } from "../../drivers/Driver";
-import { GlobalConfig } from "../../global/Config";
-import { Builder } from "../../builders/Builder";
+import { IConfigFile } from '../../global/types';
+import { FileSystemUtils } from '../../utils/filesystem';
+import { AbstractCommand } from '../AbstractCommand';
+import { Driver } from '../../drivers/Driver';
+import { GlobalConfig } from '../../global/Config';
+import { Builder } from '../../builders/Builder';
 import fs from 'fs';
 import path from 'path';
 
 // TODO: Add PK and FK section
 // TODO: Add id of the related table (FK) to entity
 
-export class GenerateCommand extends AbstractCommand {  
+export class GenerateCommand extends AbstractCommand {
   async execute() {
     const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_PATH);
     const { entities, outputDir } = configFile;
 
     if (!entities || entities.length === 0) {
-      throw new Error("No entities found")
+      throw new Error('No entities found');
     }
 
     const driver = new Driver();

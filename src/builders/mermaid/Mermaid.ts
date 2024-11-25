@@ -1,28 +1,28 @@
-import { IEntityData } from "../../drivers/types";
-import { IBuilder } from "../types";
+import { IEntityData } from '../../drivers/types';
+import { IBuilder } from '../types';
 
 export class MermaidBuilder implements IBuilder {
-  readonly fileExtension = "mmd";
+  readonly fileExtension = 'mmd';
 
   // TODO: Type keys with Relations
   private mappedRelationTypes = {
-    OneToMany: "||--o{",
-    ManyToOne: "o{--||",
-    OneToOne: "||--||",
-    ManyToMany: "o{--o{",
+    OneToMany: '||--o{',
+    ManyToOne: 'o{--||',
+    OneToOne: '||--||',
+    ManyToMany: 'o{--o{',
   };
 
-  private diagram = "";
+  private diagram = '';
 
   private processedRelations = new Set<string>();
 
   constructor() {
-    this.diagram = "erDiagram\n";
+    this.diagram = 'erDiagram\n';
   }
 
   /**
    * Returns the current state of the generated diagram.
-   * 
+   *
    * @returns {string} The Mermaid formatted diagram.
    */
   getDiagram(): string {
@@ -31,7 +31,7 @@ export class MermaidBuilder implements IBuilder {
 
   /**
    * Appends an entity, including its table name, columns, and relations, to the diagram.
-   * 
+   *
    * @param {IEntityData} entity - The entity data to add to the diagram.
    */
   appendEntity(entity: IEntityData): void {
@@ -39,12 +39,12 @@ export class MermaidBuilder implements IBuilder {
     this.appendColumns(entity);
     this.appendRelations(entity);
 
-    this.diagram += "\n";
+    this.diagram += '\n';
   }
 
   /**
    * Appends the table name for the given entity to the diagram.
-   * 
+   *
    * @private
    * @param {IEntityData} entity - The entity whose table name is to be added.
    */
@@ -54,23 +54,23 @@ export class MermaidBuilder implements IBuilder {
 
   /**
    * Appends columns for the given entity to the diagram.
-   * 
+   *
    * @private
    * @param {IEntityData} entity - The entity whose columns are to be added.
    */
   private appendColumns(entity: IEntityData): void {
-    this.diagram += " {\n";
+    this.diagram += ' {\n';
 
     entity.columns.forEach((column) => {
       this.diagram += `    ${column.type} ${column.name}\n`;
     });
 
-    this.diagram += "  }\n";
+    this.diagram += '  }\n';
   }
 
   /**
    * Appends relations for the given entity to the diagram, avoiding duplicate relations.
-   * 
+   *
    * @private
    * @param {IEntityData} entity - The entity whose relations are to be added.
    */

@@ -1,51 +1,51 @@
-import { ClassDeclaration, Project, PropertyDeclaration, SourceFile } from "ts-morph";
-import { IDriver, IColumnData, IEntityData, IRelationData, TRelations } from "../types";
+import { ClassDeclaration, Project, PropertyDeclaration, SourceFile } from 'ts-morph';
+import { IDriver, IColumnData, IEntityData, IRelationData, TRelations } from '../types';
 
 export class TypeORMDriver implements IDriver {
   private entityClass: ClassDeclaration | undefined;
 
-  private mappedDataTypes: { [key: string ]: string } = {
-    string: "varchar",
-    number: "integer",
-    boolean: "boolean",
-    Date: "timestamp",
-    float: "float",
-    double: "double precision",
-    decimal: "numeric",
-    int: "integer",
-    integer: "integer",
-    smallint: "smallint",
-    bigint: "bigint",
-    text: "text",
-    json: "json",
-    jsonb: "jsonb",
-    uuid: "uuid",
-    char: "char",
-    varchar: "varchar",
-    bytea: "bytea",
-    real: "real",
-    date: "date",
-    time: "time",
-    timestamp: "timestamp",
-    timestamptz: "timestamptz",
-    interval: "interval",
-    array: "ARRAY", 
-    geometry: "geometry",
-    geography: "geography", 
-    enum: "enum"
-  }
+  private mappedDataTypes: { [key: string]: string } = {
+    string: 'varchar',
+    number: 'integer',
+    boolean: 'boolean',
+    Date: 'timestamp',
+    float: 'float',
+    double: 'double precision',
+    decimal: 'numeric',
+    int: 'integer',
+    integer: 'integer',
+    smallint: 'smallint',
+    bigint: 'bigint',
+    text: 'text',
+    json: 'json',
+    jsonb: 'jsonb',
+    uuid: 'uuid',
+    char: 'char',
+    varchar: 'varchar',
+    bytea: 'bytea',
+    real: 'real',
+    date: 'date',
+    time: 'time',
+    timestamp: 'timestamp',
+    timestamptz: 'timestamptz',
+    interval: 'interval',
+    array: 'ARRAY',
+    geometry: 'geometry',
+    geography: 'geography',
+    enum: 'enum',
+  };
 
   constructor(private filePath: string) {}
 
   /**
    * Parses the entity from the provided file path.
-   * 
+   *
    * @returns {IEntityData} The parsed entity data including table name, columns, and relations.
    * @throws {Error} If the entity class is not defined.
    */
   parseEntity(): IEntityData {
     if (this.entityClass) {
-      throw new Error("entityClass is undefined");
+      throw new Error('entityClass is undefined');
     }
 
     const project = new Project();
@@ -59,34 +59,34 @@ export class TypeORMDriver implements IDriver {
       name: this.extractTableName(),
       columns: this.extractColumns(),
       relations: this.extractRelations(),
-    }
+    };
   }
 
   /**
    * Extracts the table name for the entity.
-   * 
+   *
    * @private
    * @returns {string} The name of the table or a default placeholder if undefined.
    * @throws {Error} If the entity class is not defined.
    */
   private extractTableName(): string {
     if (!this.entityClass) {
-      throw new Error("entityClass is undefined");
+      throw new Error('entityClass is undefined');
     }
 
-    return this.entityClass?.getName() || "% ENTITY %";
+    return this.entityClass?.getName() || '% ENTITY %';
   }
 
   /**
    * Extracts column data from the entity's properties.
-   * 
+   *
    * @private
    * @returns {IColumnData[]} An array of column data including names and types.
    * @throws {Error} If the entity class is not defined.
    */
   private extractColumns(): IColumnData[] {
     if (!this.entityClass) {
-      throw new Error("entityClass is undefined");
+      throw new Error('entityClass is undefined');
     }
 
     const columns: IColumnData[] = [];
@@ -102,7 +102,7 @@ export class TypeORMDriver implements IDriver {
         const columnType = decoratorType || property.getType().getText();
 
         // Typescript Type has to be converted into corresponding SQL type
-        const mappedType = this.mappedDataTypes[columnType] || "text"
+        const mappedType = this.mappedDataTypes[columnType] || 'text';
 
         columns.push({
           name: columnName,
@@ -116,14 +116,14 @@ export class TypeORMDriver implements IDriver {
 
   /**
    * Extracts relation data from the entity's properties.
-   * 
+   *
    * @private
    * @returns {IRelationData[]} An array of relation data including names, types, and relation types.
    * @throws {Error} If the entity class is not defined.
    */
   private extractRelations(): IRelationData[] {
     if (!this.entityClass) {
-      throw new Error("entityClass is undefined");
+      throw new Error('entityClass is undefined');
     }
 
     const relations: IRelationData[] = [];
@@ -148,7 +148,7 @@ export class TypeORMDriver implements IDriver {
 
   /**
    * Retrieves the column type specified in a decorator, if present.
-   * 
+   *
    * @private
    * @param {PropertyDeclaration} property - The property to inspect for column type.
    * @returns {string | undefined} The specified column type or undefined if not found.
@@ -158,13 +158,13 @@ export class TypeORMDriver implements IDriver {
 
     property.getDecorators().map((decorator) => {
       const args = decorator.getArguments();
-      const type = args.find((arg) => arg.getText().includes("type"));
-      
+      const type = args.find((arg) => arg.getText().includes('type'));
+
       if (!type) {
         return;
       }
 
-      decoratorType = this.getDecoratorTypeValue(type.getText()); 
+      decoratorType = this.getDecoratorTypeValue(type.getText());
     });
 
     return decoratorType;
@@ -172,7 +172,7 @@ export class TypeORMDriver implements IDriver {
 
   /**
    * Extracts the actual column type from a decorator type string.
-   * 
+   *
    * @private
    * @param {string} type - The decorator type string (e.g., '{ type: "float" }').
    * @returns {string | undefined} The extracted type or undefined if not found.
@@ -193,7 +193,7 @@ export class TypeORMDriver implements IDriver {
 
   /**
    * Retrieves the relation type decorator (e.g., OneToMany) from a property.
-   * 
+   *
    * @private
    * @param {PropertyDeclaration} property - The property to inspect for relation decorators.
    * @returns {string | undefined} The relation type if found, or undefined otherwise.

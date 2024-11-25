@@ -1,6 +1,6 @@
-import { Command } from "commander";
-import { InitCommand } from "../commands/init/InitCommand";
-import { GenerateCommand } from "../commands/generate/GenerateCommand";
+import { Command } from 'commander';
+import { InitCommand } from '../commands/init/InitCommand';
+import { GenerateCommand } from '../commands/generate/GenerateCommand';
 
 export class Quilon {
   private program: Command;
@@ -16,10 +16,7 @@ export class Quilon {
   }
 
   private configure() {
-    this.program
-      .name("Quilon")
-      .description("Create ERDs out of your ORM Entities with ease.")
-      .version("1.0.0");
+    this.program.name('Quilon').description('Create ERDs out of your ORM Entities with ease.').version('1.0.0');
   }
 
   private setupCommands() {
@@ -30,18 +27,15 @@ export class Quilon {
   private init() {
     const command = new InitCommand();
 
-    this.program
-      .command("init")
-      .description("Create a config file with default settings.")
-      .action(command.execute);
+    this.program.command('init').description('Create a config file with default settings.').action(command.execute);
   }
 
   private generate() {
     const command = new GenerateCommand();
 
     this.program
-      .command("generate")
-      .description("Generate your ERD with the specified settings.")
+      .command('generate')
+      .description('Generate your ERD with the specified settings.')
       .action(command.execute);
   }
 }

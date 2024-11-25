@@ -3,5 +3,5 @@ export abstract class AbstractCommand {
     this.execute = this.execute.bind(this);
   }
 
-  abstract execute(): void
+  abstract execute(): void;
 }
