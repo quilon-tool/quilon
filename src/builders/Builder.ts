@@ -21,14 +21,31 @@ export class Builder implements IBuilder {
     this.fileExtension = this.builder.fileExtension;
   }
 
+  /**
+   * Generates and returns the diagram as a string.
+   * 
+   * @returns {string} The generated diagram.
+   */
   getDiagram(): string {
     return this.builder.getDiagram();
   }
 
+  /**
+   * Appends an entity to the current diagram.
+   * 
+   * @param {IEntityData} entity - The entity data to be added to the diagram.
+   */
   appendEntity(entity: IEntityData): void {
     this.builder.appendEntity(entity);
   }
 
+  /**
+   * Selects and returns the appropriate builder instance based on the configured diagram language.
+   * 
+   * @private
+   * @returns {IBuilder} The builder instance for the specified diagram language.
+   * @throws {Error} If there is no builder implemented for the specified diagram language.
+   */
   private getBuilder(): IBuilder {
     switch(this.diagramLanguage) {
       case DiagramLanguages.Mermaid:
