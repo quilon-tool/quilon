@@ -13,9 +13,7 @@ export class Builder implements IBuilder {
   private builder: IBuilder;
 
   constructor() {
-    const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(
-      GlobalConfig.CONFIG_PATH
-    );
+    const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_PATH);
     const { diagramLanguage } = configFile;
 
     this.diagramLanguage = diagramLanguage;
@@ -53,9 +51,7 @@ export class Builder implements IBuilder {
       case DiagramLanguages.Mermaid:
         return new MermaidBuilder();
       default:
-        throw new Error(
-          `No Builder for Diagram Language ${this.diagramLanguage} implemented.`
-        );
+        throw new Error(`No Builder for Diagram Language ${this.diagramLanguage} implemented.`);
     }
   }
 }

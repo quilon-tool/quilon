@@ -9,9 +9,7 @@ export class Driver implements IDriver {
   private filePath: string | undefined;
 
   constructor() {
-    const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(
-      GlobalConfig.CONFIG_PATH
-    );
+    const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_PATH);
     const { orm } = configFile;
 
     this.orm = orm;

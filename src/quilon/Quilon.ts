@@ -16,10 +16,7 @@ export class Quilon {
   }
 
   private configure() {
-    this.program
-      .name('Quilon')
-      .description('Create ERDs out of your ORM Entities with ease.')
-      .version('1.0.0');
+    this.program.name('Quilon').description('Create ERDs out of your ORM Entities with ease.').version('1.0.0');
   }
 
   private setupCommands() {
@@ -30,10 +27,7 @@ export class Quilon {
   private init() {
     const command = new InitCommand();
 
-    this.program
-      .command('init')
-      .description('Create a config file with default settings.')
-      .action(command.execute);
+    this.program.command('init').description('Create a config file with default settings.').action(command.execute);
   }
 
   private generate() {

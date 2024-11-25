@@ -83,10 +83,7 @@ export class MermaidBuilder implements IBuilder {
       const reverseRelationKey = `${relatedEntityName}-${entity.name}`;
 
       // Check if the relation or its reverse has already been processed (For mermaid, one is enough)
-      if (
-        !this.processedRelations.has(relationKey) &&
-        !this.processedRelations.has(reverseRelationKey)
-      ) {
+      if (!this.processedRelations.has(relationKey) && !this.processedRelations.has(reverseRelationKey)) {
         this.diagram += `  ${entity.name} ${relationType} ${relatedEntityName}: "${relation.relation}"\n`;
         this.processedRelations.add(relationKey);
       }

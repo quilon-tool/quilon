@@ -12,9 +12,7 @@ import path from 'path';
 
 export class GenerateCommand extends AbstractCommand {
   async execute() {
-    const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(
-      GlobalConfig.CONFIG_PATH
-    );
+    const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_PATH);
     const { entities, outputDir } = configFile;
 
     if (!entities || entities.length === 0) {
@@ -26,10 +24,7 @@ export class GenerateCommand extends AbstractCommand {
 
     for (const directory of entities) {
       const fileNamePattern = driver.getFileNamePattern();
-      const files = await FileSystemUtils.readFilesFromDirectory(
-        directory,
-        fileNamePattern
-      );
+      const files = await FileSystemUtils.readFilesFromDirectory(directory, fileNamePattern);
 
       for (const file of files) {
         driver.setFilePath(file);
@@ -39,10 +34,7 @@ export class GenerateCommand extends AbstractCommand {
       }
     }
 
-    const fileName = path.join(
-      outputDir,
-      `${GlobalConfig.DIAGRAM_FILE_NAME}.${builder.fileExtension}`
-    );
+    const fileName = path.join(outputDir, `${GlobalConfig.DIAGRAM_FILE_NAME}.${builder.fileExtension}`);
     const diagram = builder.getDiagram();
 
     if (!fs.existsSync(outputDir)) {

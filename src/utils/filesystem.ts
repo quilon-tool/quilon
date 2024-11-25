@@ -24,10 +24,7 @@ export class FileSystemUtils {
    * @param {string} fileNamePattern - The glob pattern to match file names.
    * @returns {Promise<string[]>} A promise that resolves to an array of matching file paths.
    */
-  static async readFilesFromDirectory(
-    directory: string,
-    fileNamePattern: string
-  ): Promise<string[]> {
+  static async readFilesFromDirectory(directory: string, fileNamePattern: string): Promise<string[]> {
     const directoryPath = path.resolve(directory);
 
     return glob(`${directoryPath}/**/${fileNamePattern}`);

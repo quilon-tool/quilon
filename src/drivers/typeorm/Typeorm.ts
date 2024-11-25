@@ -1,16 +1,5 @@
-import {
-  ClassDeclaration,
-  Project,
-  PropertyDeclaration,
-  SourceFile,
-} from 'ts-morph';
-import {
-  IDriver,
-  IColumnData,
-  IEntityData,
-  IRelationData,
-  TRelations,
-} from '../types';
+import { ClassDeclaration, Project, PropertyDeclaration, SourceFile } from 'ts-morph';
+import { IDriver, IColumnData, IEntityData, IRelationData, TRelations } from '../types';
 
 export class TypeORMDriver implements IDriver {
   private entityClass: ClassDeclaration | undefined;
@@ -209,12 +198,8 @@ export class TypeORMDriver implements IDriver {
    * @param {PropertyDeclaration} property - The property to inspect for relation decorators.
    * @returns {string | undefined} The relation type if found, or undefined otherwise.
    */
-  private getRelationDecorator(
-    property: PropertyDeclaration
-  ): string | undefined {
-    const decorators = property
-      .getDecorators()
-      .map((decorator) => decorator.getName());
+  private getRelationDecorator(property: PropertyDeclaration): string | undefined {
+    const decorators = property.getDecorators().map((decorator) => decorator.getName());
 
     return decorators.find((decorator) => {
       if (Object.keys(TRelations).includes(decorator)) {
