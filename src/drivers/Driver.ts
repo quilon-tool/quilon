@@ -1,6 +1,6 @@
 import { GlobalConfig } from '../global/Config';
 import { IConfigFile, ORMs } from '../global/types';
-import { FileSystemUtils } from '../utils/Filesystem';
+import { FileSystemUtils } from '../utils/filesystem';
 import { TypeORMDriver } from './typeorm/Typeorm';
 import { IDriver, IEntityData } from './types';
 

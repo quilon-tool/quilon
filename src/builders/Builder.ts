@@ -1,7 +1,7 @@
 import { IEntityData } from '../drivers/types';
 import { GlobalConfig } from '../global/Config';
 import { DiagramLanguages, IConfigFile } from '../global/types';
-import { FileSystemUtils } from '../utils/Filesystem';
+import { FileSystemUtils } from '../utils/filesystem';
 import { MermaidBuilder } from './mermaid/Mermaid';
 import { IBuilder } from './types';
 
