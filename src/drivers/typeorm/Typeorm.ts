@@ -105,7 +105,7 @@ export class TypeORMDriver implements IDriver {
         // Type can be specified with @Column({ type: "float" })
         const decoratorType = this.getDecoratorType(property);
 
-        const columnName = property.getName();
+        const columnName = `${property.getName()} ${primaryKeyColumnDecorator ? '(PK)' : ''}`;
         const columnType = decoratorType || property.getType().getText();
 
         // Typescript Type has to be converted into corresponding SQL type
@@ -118,7 +118,7 @@ export class TypeORMDriver implements IDriver {
       }
 
       if (relationDecorator === TRelations.ManyToOne || relationDecorator === TRelations.ManyToMany) {
-        const columnName = `${property.getName()}Id`;
+        const columnName = `${property.getName()}Id (FK)`;
         const mappedType = this.mappedDataTypes[primaryKeyColumnType] || 'number';
 
         columns.push({
