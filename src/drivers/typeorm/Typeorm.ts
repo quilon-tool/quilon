@@ -91,8 +91,15 @@ export class TypeORMDriver implements IDriver {
 
     const columns: IColumnData[] = [];
 
+    let primaryKeyColumnType: string;
+
     this.entityClass.getProperties().forEach((property) => {
       const relationDecorator = this.getRelationDecorator(property);
+      const primaryKeyColumnDecorator = this.getPrimaryKeyColumnDecorator(property);
+
+      if (primaryKeyColumnDecorator) {
+        primaryKeyColumnType = property.getType().getText();
+      }
 
       if (!relationDecorator) {
         // Type can be specified with @Column({ type: "float" })
@@ -103,6 +110,16 @@ export class TypeORMDriver implements IDriver {
 
         // Typescript Type has to be converted into corresponding SQL type
         const mappedType = this.mappedDataTypes[columnType] || 'text';
+
+        columns.push({
+          name: columnName,
+          type: mappedType,
+        });
+      }
+
+      if (relationDecorator === TRelations.ManyToOne || relationDecorator === TRelations.ManyToMany) {
+        const columnName = `${property.getName()}Id`;
+        const mappedType = this.mappedDataTypes[primaryKeyColumnType] || 'number';
 
         columns.push({
           name: columnName,
@@ -203,6 +220,16 @@ export class TypeORMDriver implements IDriver {
 
     return decorators.find((decorator) => {
       if (Object.keys(TRelations).includes(decorator)) {
+        return decorator;
+      }
+    });
+  }
+
+  private getPrimaryKeyColumnDecorator(property: PropertyDeclaration): string | undefined {
+    const decorators = property.getDecorators().map((decorator) => decorator.getName());
+
+    return decorators.find((decorator) => {
+      if (decorator === 'PrimaryGeneratedColumn') {
         return decorator;
       }
     });
