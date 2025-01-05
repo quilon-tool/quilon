@@ -117,7 +117,7 @@ export class TypeORMDriver implements IDriver {
         });
       }
 
-      if (relationDecorator === TRelations.ManyToOne || relationDecorator === TRelations.ManyToMany) {
+      if (relationDecorator === TRelations.ManyToOne) {
         const columnName = `${property.getName()}Id "(FK)"`;
 
         // Use the type of the primary key because foreign keys will have the same type
