@@ -227,6 +227,13 @@ export class TypeORMDriver implements IDriver {
     });
   }
 
+  /**
+   * Retrieves the name of the primary key column decorator from a given property declaration.
+   *
+   * @private
+   * @param {PropertyDeclaration} property - The property declaration to inspect for decorators.
+   * @returns {string | undefined} The name of the primary key column decorator if found; otherwise, `undefined`.
+   */
   private getPrimaryKeyColumnDecorator(property: PropertyDeclaration): string | undefined {
     const decorators = property.getDecorators().map((decorator) => decorator.getName());
 
