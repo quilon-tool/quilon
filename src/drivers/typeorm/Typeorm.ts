@@ -91,18 +91,37 @@ export class TypeORMDriver implements IDriver {
 
     const columns: IColumnData[] = [];
 
+    let primaryKeyColumnType: string;
+
     this.entityClass.getProperties().forEach((property) => {
       const relationDecorator = this.getRelationDecorator(property);
+      const primaryKeyColumnDecorator = this.getPrimaryKeyColumnDecorator(property);
+
+      if (primaryKeyColumnDecorator) {
+        primaryKeyColumnType = property.getType().getText();
+      }
 
       if (!relationDecorator) {
         // Type can be specified with @Column({ type: "float" })
         const decoratorType = this.getDecoratorType(property);
 
-        const columnName = property.getName();
+        const columnName = `${property.getName()} ${primaryKeyColumnDecorator ? '"(PK)"' : ''}`;
         const columnType = decoratorType || property.getType().getText();
 
         // Typescript Type has to be converted into corresponding SQL type
         const mappedType = this.mappedDataTypes[columnType] || 'text';
+
+        columns.push({
+          name: columnName,
+          type: mappedType,
+        });
+      }
+
+      if (relationDecorator === TRelations.ManyToOne) {
+        const columnName = `${property.getName()}Id "(FK)"`;
+
+        // Use the type of the primary key because foreign keys will have the same type
+        const mappedType = this.mappedDataTypes[primaryKeyColumnType] || 'number';
 
         columns.push({
           name: columnName,
@@ -203,6 +222,23 @@ export class TypeORMDriver implements IDriver {
 
     return decorators.find((decorator) => {
       if (Object.keys(TRelations).includes(decorator)) {
+        return decorator;
+      }
+    });
+  }
+
+  /**
+   * Retrieves the name of the primary key column decorator from a given property declaration.
+   *
+   * @private
+   * @param {PropertyDeclaration} property - The property declaration to inspect for decorators.
+   * @returns {string | undefined} The name of the primary key column decorator if found; otherwise, `undefined`.
+   */
+  private getPrimaryKeyColumnDecorator(property: PropertyDeclaration): string | undefined {
+    const decorators = property.getDecorators().map((decorator) => decorator.getName());
+
+    return decorators.find((decorator) => {
+      if (decorator === 'PrimaryGeneratedColumn') {
         return decorator;
       }
     });
