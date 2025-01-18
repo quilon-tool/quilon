@@ -1,4 +1,4 @@
-import { GlobalConfig } from '../global/Config';
+import { GlobalConfig } from '../global/config';
 import { IConfigFile, ORMs } from '../global/types';
 import { FileSystemUtils } from '../utils/filesystem';
 import { TypeORMDriver } from './typeorm/Typeorm';
