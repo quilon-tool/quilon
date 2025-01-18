@@ -7,9 +7,6 @@ import { Builder } from '../../builders/Builder';
 import fs from 'fs';
 import path from 'path';
 
-// TODO: Add PK and FK section
-// TODO: Add id of the related table (FK) to entity
-
 export class GenerateCommand extends AbstractCommand {
   async execute() {
     const configFile = FileSystemUtils.readAndParseJSONFile<IConfigFile>(GlobalConfig.CONFIG_PATH);
