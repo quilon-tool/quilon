@@ -1,14 +1,5 @@
-import { IEntityData, TRelations } from '../../drivers/types';
+import { mockEntity } from './fixtures/mockEntity';
 import { MermaidBuilder } from './Mermaid';
-
-const mockEntity: IEntityData = {
-  name: 'MockEntity',
-  columns: [
-    { name: 'id', type: 'varchar' },
-    { name: 'age', type: 'integer' },
-  ],
-  relations: [{ name: 'MockEntity', type: 'RelatedEntity', relation: TRelations.OneToMany }],
-};
 
 const mermaidBuilder = new MermaidBuilder();
 
