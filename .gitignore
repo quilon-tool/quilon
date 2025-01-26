@@ -50,7 +50,3 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
-
-# Lock files
-package-lock.json
-yarn.lock
