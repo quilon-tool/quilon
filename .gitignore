@@ -1,6 +1,10 @@
 # Node modules
 node_modules/
 
+# Files for testing
+diagrams/
+entities/
+
 # Config
 quilon.json
 
