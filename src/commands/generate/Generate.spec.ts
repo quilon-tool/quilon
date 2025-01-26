@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { GenerateCommand } from './GenerateCommand';
+import { GenerateCommand } from './Generate';
 import { FileSystemUtils } from '../../utils/filesystem';
 import { Driver } from '../../drivers/Driver';
 import { Builder } from '../../builders/Builder';

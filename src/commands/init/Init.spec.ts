@@ -1,5 +1,5 @@
 import fs from 'fs';
-import { InitCommand } from './InitCommand';
+import { InitCommand } from './Init';
 import { GlobalConfig } from '../../global/config';
 import { ORMs, DiagramLanguages } from '../../global/types';
 
