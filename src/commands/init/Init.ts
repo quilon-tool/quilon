@@ -1,6 +1,6 @@
 import fs from 'fs';
 import { IConfigFile, DiagramLanguages, ORMs } from '../../global/types';
-import { GlobalConfig } from '../../global/Config';
+import { GlobalConfig } from '../../global/config';
 import { AbstractCommand } from '../AbstractCommand';
 
 export class InitCommand extends AbstractCommand {

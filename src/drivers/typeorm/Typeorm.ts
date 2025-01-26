@@ -44,10 +44,6 @@ export class TypeORMDriver implements IDriver {
    * @throws {Error} If the entity class is not defined.
    */
   parseEntity(): IEntityData {
-    if (this.entityClass) {
-      throw new Error('entityClass is undefined');
-    }
-
     const project = new Project();
     const sourceFile: SourceFile = project.addSourceFileAtPath(this.filePath);
 
@@ -74,7 +70,7 @@ export class TypeORMDriver implements IDriver {
       throw new Error('entityClass is undefined');
     }
 
-    return this.entityClass?.getName() || '% ENTITY %';
+    return this.entityClass.getName() || '% ENTITY %';
   }
 
   /**

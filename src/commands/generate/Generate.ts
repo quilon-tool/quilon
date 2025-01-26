@@ -2,13 +2,10 @@ import { IConfigFile } from '../../global/types';
 import { FileSystemUtils } from '../../utils/filesystem';
 import { AbstractCommand } from '../AbstractCommand';
 import { Driver } from '../../drivers/Driver';
-import { GlobalConfig } from '../../global/Config';
+import { GlobalConfig } from '../../global/config';
 import { Builder } from '../../builders/Builder';
 import fs from 'fs';
 import path from 'path';
-
-// TODO: Add PK and FK section
-// TODO: Add id of the related table (FK) to entity
 
 export class GenerateCommand extends AbstractCommand {
   async execute() {

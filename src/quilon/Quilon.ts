@@ -1,6 +1,6 @@
 import { Command } from 'commander';
-import { InitCommand } from '../commands/init/InitCommand';
-import { GenerateCommand } from '../commands/generate/GenerateCommand';
+import { InitCommand } from '../commands/init/Init';
+import { GenerateCommand } from '../commands/generate/Generate';
 
 export class Quilon {
   private program: Command;
