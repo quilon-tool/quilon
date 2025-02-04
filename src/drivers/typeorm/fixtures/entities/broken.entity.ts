@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn } from '../decorators';
+import { PrimaryGeneratedColumn } from "../decorators";
 
 export class Broken {
   @PrimaryGeneratedColumn()

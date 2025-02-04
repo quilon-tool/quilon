@@ -1,9 +1,9 @@
 export enum ORMs {
-  TypeORM = 'TypeORM',
+  TypeORM = "TypeORM",
 }
 
 export enum DiagramLanguages {
-  Mermaid = 'Mermaid',
+  Mermaid = "Mermaid",
 }
 
 export interface IConfigFile {

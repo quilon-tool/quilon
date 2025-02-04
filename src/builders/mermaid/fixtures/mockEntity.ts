@@ -1,10 +1,10 @@
-import { IEntityData, TRelations } from '../../../drivers/types';
+import { IEntityData, TRelations } from "../../../drivers/types";
 
 export const mockEntity: IEntityData = {
-  name: 'MockEntity',
+  name: "MockEntity",
   columns: [
-    { name: 'id', type: 'varchar' },
-    { name: 'age', type: 'integer' },
+    { name: "id", type: "varchar" },
+    { name: "age", type: "integer" },
   ],
-  relations: [{ name: 'MockEntity', type: 'RelatedEntity', relation: TRelations.OneToMany }],
+  relations: [{ name: "MockEntity", type: "RelatedEntity", relation: TRelations.OneToMany }],
 };

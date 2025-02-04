@@ -1,9 +1,10 @@
-import { IEntityData } from '../drivers/types';
-import { GlobalConfig } from '../global/config';
-import { DiagramLanguages, IConfigFile } from '../global/types';
-import { FileSystemUtils } from '../utils/filesystem';
-import { MermaidBuilder } from './mermaid/Mermaid';
-import { IBuilder } from './types';
+import { IEntityData } from "../drivers/types";
+import { GlobalConfig } from "../global/config";
+import { DiagramLanguages, IConfigFile } from "../global/types";
+import { FileSystemUtils } from "../utils/filesystem";
+
+import { MermaidBuilder } from "./mermaid/Mermaid";
+import { IBuilder } from "./types";
 
 export class Builder implements IBuilder {
   readonly fileExtension: string;

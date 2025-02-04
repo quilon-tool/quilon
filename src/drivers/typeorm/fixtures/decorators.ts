@@ -1,19 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
+/* eslint-disable unused-imports/no-unused-vars */
 export function Entity() {
-  return function (constructor: Function) {};
+  return function (_constructor: Function) {};
 }
 
 export function PrimaryGeneratedColumn(): PropertyDecorator {
-  return (target: Object, propertyKey: string | symbol): void => {};
+  return (_target: object, _propertyKey: string | symbol): void => {};
 }
 
 export function Column() {
-  return function (target: Object, propertyKey: string) {};
+  return function (_target: object, _propertyKey: string) {};
 }
 
-export function OneToMany(typeFunc: () => any, inverseSide: (object: any) => any) {
-  return function (target: Object, propertyKey: string) {};
+export function OneToMany(_typeFunc: () => any, _inverseSide: (object: any) => any) {
+  return function (_target: object, _propertyKey: string) {};
 }
 
-export function ManyToOne(typeFunc: () => any, inverseSide: (object: any) => any) {
-  return function (target: Object, propertyKey: string) {};
+export function ManyToOne(_typeFunc: () => any, _inverseSide: (object: any) => any) {
+  return function (_target: object, _propertyKey: string) {};
 }
