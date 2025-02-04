@@ -1,8 +1,43 @@
 {
   "name": "quilon",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.0",
+  "description": "Generate ERDs from your entity files automagically",
+  "homepage": "https://github.com/quilon-tool/quilon/blob/main/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quilon-tool/quilon"
+  },
+  "main": "build/index.js",
+  "types": "types.d.ts",
+  "files": [
+    "build",
+    "types.d.ts"
+  ],
+  "keywords": [
+    "ERD",
+    "entity-relationship-diagram",
+    "diagram",
+    "typescript",
+    "typeorm",
+    "prisma",
+    "sequelize",
+    "database",
+    "entity",
+    "schema",
+    "autogenerate",
+    "visualization",
+    "datamodel",
+    "sql",
+    "nosql",
+    "postgresql",
+    "orm",
+    "relational-database",
+    "code-first",
+    "reverse-engineering",
+    "automatic",
+    "erd-generator",
+    "mermaid"
+  ],
   "scripts": {
     "start:dev": "npx nodemon",
     "lint": "npx eslint --ext .ts .",
@@ -10,9 +45,8 @@
     "format": "prettier --write \"src/**/*.{ts,js,json,md}\"",
     "test:unit": "jest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Quilon",
+  "license": "MIT",
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@typescript-eslint/eslint-plugin": "^8.23.0",
