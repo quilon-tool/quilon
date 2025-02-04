@@ -17,12 +17,14 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:prettier/recommended',
   ],
-  plugins: ['@typescript-eslint', 'import', 'prettier'],
+  plugins: ['@typescript-eslint', 'import', 'prettier', 'unused-imports'],
   rules: {
     'prettier/prettier': 'warn',
     '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-explicit-any': 'off',
     'import/no-unresolved': 'off', // Disable unresolved errors due to TypeScript handling it
+    'unused-imports/no-unused-imports': 'warn',
+    'unused-imports/no-unused-vars': ['warn', { vars: 'all', varsIgnorePattern: '^_' }],
     'import/order': [
       'warn',
       {
