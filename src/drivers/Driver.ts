@@ -1,8 +1,9 @@
-import { GlobalConfig } from '../global/config';
-import { IConfigFile, ORMs } from '../global/types';
-import { FileSystemUtils } from '../utils/filesystem';
-import { TypeORMDriver } from './typeorm/Typeorm';
-import { IDriver, IEntityData } from './types';
+import { GlobalConfig } from "../global/config";
+import { IConfigFile, ORMs } from "../global/types";
+import { FileSystemUtils } from "../utils/filesystem";
+
+import { TypeORMDriver } from "./typeorm/Typeorm";
+import { IDriver, IEntityData } from "./types";
 
 export class Driver implements IDriver {
   private orm: ORMs;
@@ -32,7 +33,7 @@ export class Driver implements IDriver {
    */
   parseEntity(): IEntityData {
     if (!this.filePath) {
-      throw new Error('filePath is not defined.');
+      throw new Error("filePath is not defined.");
     }
 
     const driver = this.getDriver();
@@ -48,7 +49,7 @@ export class Driver implements IDriver {
   getFileNamePattern(): string {
     switch (this.orm) {
       case ORMs.TypeORM:
-        return '*.entity.ts';
+        return "*.entity.ts";
       default:
         throw new Error(`No Driver for ORM ${this.orm} implemented.`);
     }
@@ -63,7 +64,7 @@ export class Driver implements IDriver {
    */
   private getDriver(): IDriver {
     if (!this.filePath) {
-      throw new Error('filePath is not defined.');
+      throw new Error("filePath is not defined.");
     }
 
     switch (this.orm) {

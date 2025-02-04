@@ -20,8 +20,8 @@ export interface IRelationData {
 }
 
 export enum TRelations {
-  OneToOne = 'OneToOne',
-  OneToMany = 'OneToMany',
-  ManyToOne = 'ManyToOne',
-  ManyToMany = 'ManyToMany',
+  OneToOne = "OneToOne",
+  OneToMany = "OneToMany",
+  ManyToOne = "ManyToOne",
+  ManyToMany = "ManyToMany",
 }

@@ -1,15 +1,15 @@
-import { mockEntity } from './fixtures/mockEntity';
-import { MermaidBuilder } from './Mermaid';
+import { mockEntity } from "./fixtures/mockEntity";
+import { MermaidBuilder } from "./Mermaid";
 
 const mermaidBuilder = new MermaidBuilder();
 
-describe('Mermaid', () => {
-  it('should be defined', () => {
+describe("Mermaid", () => {
+  it("should be defined", () => {
     expect(mermaidBuilder).toBeDefined();
   });
 
-  describe('appendEntity', () => {
-    it('should append the entity to the diagram', () => {
+  describe("appendEntity", () => {
+    it("should append the entity to the diagram", () => {
       const resultPattern = new RegExp(
         `
         erDiagram\\s*
@@ -20,7 +20,7 @@ describe('Mermaid', () => {
         MockEntity \\|\\|--o\\{ RelatedEntity: "OneToMany"
       `
           .trim()
-          .replace(/\s+/g, '\\s*')
+          .replace(/\s+/g, "\\s*"),
       );
 
       mermaidBuilder.appendEntity(mockEntity);
@@ -31,10 +31,10 @@ describe('Mermaid', () => {
     });
   });
 
-  it('should call the correct private methods', () => {
-    const appendTableNameSpy = jest.spyOn(mermaidBuilder as any, 'appendTableName');
-    const appendColumnsSpy = jest.spyOn(mermaidBuilder as any, 'appendColumns');
-    const appendRelationsSpy = jest.spyOn(mermaidBuilder as any, 'appendRelations');
+  it("should call the correct private methods", () => {
+    const appendTableNameSpy = jest.spyOn(mermaidBuilder as any, "appendTableName");
+    const appendColumnsSpy = jest.spyOn(mermaidBuilder as any, "appendColumns");
+    const appendRelationsSpy = jest.spyOn(mermaidBuilder as any, "appendRelations");
 
     mermaidBuilder.appendEntity(mockEntity);
 

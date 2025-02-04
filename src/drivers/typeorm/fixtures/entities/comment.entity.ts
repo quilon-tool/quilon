@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from '../decorators';
-import { User } from './user.entity';
+import { Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "../decorators";
+
+import { User } from "./user.entity";
 
 @Entity()
 export class Comment {
