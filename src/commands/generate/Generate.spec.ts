@@ -43,7 +43,7 @@ describe("GenerateCommand", () => {
     const mockBuilder = {
       appendEntity: jest.fn(),
       getDiagram: jest.fn().mockReturnValue(mockDiagram),
-      fileExtension: "md",
+      fileExtension: "mmd",
     };
 
     (Driver as jest.Mock).mockImplementation(() => mockDriver);
@@ -94,7 +94,7 @@ describe("GenerateCommand", () => {
 
     await expect(generateCommand.execute()).rejects.toThrow("Write error");
 
-    const expectedFileName = path.join(mockConfigFile.outputDir, `${GlobalConfig.DIAGRAM_FILE_NAME}.md`);
+    const expectedFileName = path.join(mockConfigFile.outputDir, `${GlobalConfig.DIAGRAM_FILE_NAME}.mmd`);
 
     expect(FileSystemUtils.readFilesFromDirectory).toHaveBeenCalledWith("src/entities", "*.ts");
     expect(fs.writeFileSync).toHaveBeenCalledWith(expectedFileName, mockDiagram);
