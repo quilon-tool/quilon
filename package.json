@@ -39,6 +39,8 @@
     "mermaid"
   ],
   "scripts": {
+    "build": "tsc && ts-node src/index.ts",
+    "postbuild": "echo 'export * from \"./dist\";' > types.d.ts",
     "start:dev": "npx nodemon",
     "lint": "npx eslint --ext .ts .",
     "lint:fix": "npm run lint --write",
