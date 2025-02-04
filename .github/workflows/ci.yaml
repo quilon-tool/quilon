@@ -30,7 +30,4 @@ jobs:
         run: npm run lint
 
       - name: Run unit tests
-        run: npm test
-
-      # - name: Run depcheck
-      #   run: npx depcheck
+        run: npm test:unit
