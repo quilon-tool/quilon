@@ -65,17 +65,17 @@ jobs:
         id: package-version
         run: echo "CURRENT_VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
 
-      # - name: Validate tag version
-      #   run: |
-      #     echo "Current package.json version: $CURRENT_VERSION"
-      #     echo "Git tag version: $TAG_VERSION"
+      - name: Validate tag version
+        run: |
+          echo "Current package.json version: $CURRENT_VERSION"
+          echo "Git tag version: $TAG_VERSION"
 
-      #     if [ "$(printf "%s\n%s" "$CURRENT_VERSION" "$TAG_VERSION" | sort -V | head -n1)" != "$CURRENT_VERSION" ]; then
-      #       echo "✅ Tag version is valid (higher than current version)"
-      #     else
-      #       echo "❌ ERROR: Tag version ($TAG_VERSION) is lower than or equal to the current version ($CURRENT_VERSION)."
-      #       exit 1
-      #     fi
+          if [ "$(printf "%s\n%s" "$CURRENT_VERSION" "$TAG_VERSION" | sort -V | head -n1)" != "$CURRENT_VERSION" ]; then
+            echo "✅ Tag version is valid (higher than current version)"
+          else
+            echo "❌ ERROR: Tag version ($TAG_VERSION) is lower than or equal to the current version ($CURRENT_VERSION)."
+            exit 1
+          fi
 
       # - name: Update package.json version
       #   run: npm version --no-git-tag-version $TAG_VERSION
