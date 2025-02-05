@@ -58,33 +58,11 @@ jobs:
           node-version: 18
           registry-url: "https://registry.npmjs.org/"
 
-      - name: Extract version from tag
-        run: echo "TAG_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+      - name: Install dependencies
+        run: npm install
 
-      - name: Read current package.json version
-        id: package-version
-        run: echo "CURRENT_VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
-
-      - name: Validate tag version
-        run: |
-          echo "Current package.json version: $CURRENT_VERSION"
-          echo "Git tag version: $TAG_VERSION"
-
-          if [ "$(printf "%s\n%s" "$CURRENT_VERSION" "$TAG_VERSION" | sort -V | head -n1)" != "$CURRENT_VERSION" ]; then
-            echo "✅ Tag version is valid (higher than current version)"
-          else
-            echo "❌ ERROR: Tag version ($TAG_VERSION) is lower than or equal to the current version ($CURRENT_VERSION)."
-            exit 1
-          fi
-
-      # - name: Update package.json version
-      #   run: npm version --no-git-tag-version $TAG_VERSION
-
-      # - name: Install dependencies
-      #   run: npm install
-
-      # - name: Build package
-      #   run: npm run build
+      - name: Build package
+        run: npm run build
 
       # - name: Publish to NPM
       #   run: npm publish --access public
