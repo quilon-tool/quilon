@@ -1,6 +1,6 @@
 {
   "name": "quilon",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "Generate ERDs from your entity files automagically",
   "homepage": "https://github.com/quilon-tool/quilon/blob/main/README.md",
   "repository": {
@@ -40,7 +40,7 @@
   ],
   "scripts": {
     "build": "tsc && ts-node src/index.ts",
-    "postbuild": "echo 'export * from \"./dist\";' > types.d.ts",
+    "postbuild": "echo 'export * from \"./build\";' > types.d.ts",
     "start:dev": "npx nodemon",
     "lint": "npx eslint --ext .ts .",
     "lint:fix": "npm run lint --write",
