@@ -63,7 +63,7 @@ jobs:
 
       - name: Read current package.json version
         id: package-version
-        run: echo "CURRENT_VERSION=$(node -p 'require(\"./package.json\").version')" >> $GITHUB_ENV
+        run: echo "CURRENT_VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
 
       # - name: Validate tag version
       #   run: |
