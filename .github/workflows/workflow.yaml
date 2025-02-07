@@ -57,7 +57,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT }}
           fetch-depth: 0 # Fetch all history for tagging
 
       - name: Setup Node.js
@@ -74,14 +74,11 @@ jobs:
         run: |
           NEW_VERSION=$(npm version ${{ github.event.inputs.version_bump }} --no-git-tag-version)
           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config --global user.name "quilon-ci"
+          git config --global user.email "quilon-ci@quilon-tool.com"
           git commit -am "chore(release): bump version to $NEW_VERSION"
           git tag "v$NEW_VERSION"
-          git push origin main --tags
-          echo "NEW_VERSION=$NEW_VERSION"
-          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
-
+          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git main --tags
   publish:
     needs: version
     runs-on: ubuntu-latest
