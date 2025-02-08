@@ -1,6 +1,6 @@
 {
   "name": "quilon",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Generate ERDs from your entity files automagically",
   "homepage": "https://github.com/quilon-tool/quilon/blob/main/README.md",
   "repository": {
