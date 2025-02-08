@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/quilon-tool/quilon"
   },
+  "bin": {
+    "quilon": "./build/index.js"
+  },
   "main": "build/index.js",
   "types": "types.d.ts",
   "files": [
@@ -39,7 +42,7 @@
     "mermaid"
   ],
   "scripts": {
-    "build": "tsc && ts-node src/index.ts",
+    "build": "rm -rf ./build && tsc",
     "postbuild": "echo 'export * from \"./build\";' > types.d.ts",
     "start:dev": "npx nodemon",
     "lint": "npx eslint --ext .ts .",
